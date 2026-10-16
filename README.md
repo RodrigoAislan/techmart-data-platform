@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 TechMart Data Engineering Platform
 
 Overview
@@ -53,3 +54,7 @@ Credentials, private keys, and environment-specific secrets must never be commit
 Documentation
 
 Architecture, setup, data definitions, pipeline operations, and troubleshooting instructions will be added as the project develops.
+=======
+# techmart-data-platform
+End-to-end data engineering platform using Python, Airflow, AWS S3, Snowflake, dbt Core, and Power BI.
+>>>>>>> 73d97cbdc0d6cb40c21312631eba87ed00c32ce5
