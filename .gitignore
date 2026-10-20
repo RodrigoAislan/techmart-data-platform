@@ -6,6 +6,7 @@ venv/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+.venv-dbt/
 
 # Secrets and local configuration
 .env
@@ -28,6 +29,12 @@ dbt/target/
 dbt/dbt_packages/
 dbt/logs/
 dbt/.user.yml
+
+# TechMart dbt project generated files
+techmart_dbt/target/
+techmart_dbt/dbt_packages/
+techmart_dbt/logs/
+techmart_dbt/.user.yml
 
 # Editors and operating systems
 .vscode/
