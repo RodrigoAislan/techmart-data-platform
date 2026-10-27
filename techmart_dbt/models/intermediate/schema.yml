@@ -1,0 +1,54 @@
+
+version: 2
+
+models:
+  - name: int_order_items_enriched
+    description: >
+      Order-item-level dataset enriched with customer, product,
+      and order attributes. Each row represents one order item.
+    columns:
+      - name: order_id
+        description: "Identifier of the parent order."
+        data_tests:
+          - not_null
+
+      - name: customer_id
+        description: "Identifier of the customer who placed the order."
+        data_tests:
+          - not_null
+
+      - name: product_id
+        description: "Identifier of the product in the order."
+        data_tests:
+          - not_null
+
+      - name: quantity
+        description: "Quantity of the product in this order item."
+        data_tests:
+          - not_null
+
+  - name: int_orders_enriched
+    description: >
+      Order-level dataset enriched with customer attributes and
+      aggregated item metrics. Each row represents one order.
+    columns:
+      - name: order_id
+        description: "Unique identifier for each order."
+        data_tests:
+          - unique
+          - not_null
+
+      - name: customer_id
+        description: "Identifier of the customer who placed the order."
+        data_tests:
+          - not_null
+
+      - name: order_total
+        description: "Original order total from the source API."
+        data_tests:
+          - not_null
+
+      - name: order_discounted_total
+        description: "Discounted order total from the source API."
+        data_tests:
+          - not_null

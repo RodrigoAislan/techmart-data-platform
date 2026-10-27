@@ -1,0 +1,72 @@
+
+
+version: 2
+
+models:
+  - name: fct_sales
+    description: >
+      Sales fact table at the order-item grain. Each row represents
+      one product line within an order, with customer and product
+      attributes for business analysis.
+    columns:
+      - name: order_id
+        description: Identifier of the order.
+        data_tests:
+          - not_null
+
+      - name: customer_id
+        description: Identifier of the customer who placed the order.
+        data_tests:
+          - not_null
+
+      - name: product_id
+        description: Identifier of the product sold.
+        data_tests:
+          - not_null
+
+      - name: quantity
+        description: Number of units sold in the order item.
+        data_tests:
+          - not_null
+
+      - name: gross_sales_amount
+        description: Sales amount before item discounts.
+        data_tests:
+          - not_null
+
+      - name: net_sales_amount
+        description: Sales amount after item discounts.
+        data_tests:
+          - not_null
+
+  - name: dim_customers
+    description: >
+      Customer dimension containing customer identifiers,
+      contact information, and geographic attributes.
+    columns:
+      - name: customer_id
+        description: Unique customer identifier.
+        data_tests:
+          - unique
+          - not_null
+
+      - name: email
+        description: Customer email address.
+        data_tests:
+          - not_null
+
+  - name: dim_products
+    description: >
+      Product dimension containing product identifiers,
+      names, categories, and brands.
+    columns:
+      - name: product_id
+        description: Unique product identifier.
+        data_tests:
+          - unique
+          - not_null
+
+      - name: product_name
+        description: Product title.
+        data_tests:
+          - not_null
