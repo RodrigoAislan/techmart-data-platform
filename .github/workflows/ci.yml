@@ -1,0 +1,67 @@
+name: TechMart CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate-python:
+    name: Validate Python syntax
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile Python files
+        run: python -m compileall -q ingestion dags
+
+  validate-dbt:
+    name: Validate dbt project
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dbt dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install dbt-core==1.12.6 dbt-snowflake==1.12.3
+
+      - name: Validate dbt project
+        working-directory: techmart_dbt
+        env:
+          DBT_PROFILES_DIR: ${{ runner.temp }}/dbt-profiles
+        run: |
+          mkdir -p "$DBT_PROFILES_DIR"
+          cat > "$DBT_PROFILES_DIR/profiles.yml" <<'EOF'
+          techmart_dbt:
+            target: ci
+            outputs:
+              ci:
+                type: snowflake
+                account: ci-placeholder
+                user: ci-placeholder
+                password: ci-placeholder
+                role: ci-placeholder
+                database: TECHMART_DB
+                warehouse: TECHMART_TRANSFORM_WH
+                schema: CI_VALIDATION
+                threads: 1
+          EOF
+          dbt parse --profiles-dir "$DBT_PROFILES_DIR"
